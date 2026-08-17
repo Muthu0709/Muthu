@@ -1,0 +1,795 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Management System</title>
+
+    <style>
+
+        /* =========================
+           GENERAL STYLE
+        ========================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+        }
+
+
+        /* =========================
+           NAVIGATION BAR
+        ========================== */
+
+        nav {
+            background-color: #1e3a8a;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        nav h2 {
+            color: white;
+            margin: 0;
+            margin-right: auto;
+        }
+
+        nav button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        nav button:hover {
+            background-color: #60a5fa;
+        }
+
+
+        /* =========================
+           PAGE
+        ========================== */
+
+        .page {
+            display: none;
+        }
+
+        #studentPage {
+            display: block;
+        }
+
+
+        /* =========================
+           CONTAINER
+        ========================== */
+
+        .container {
+            width: 500px;
+            max-width: 90%;
+            margin: 40px auto;
+            padding: 30px;
+
+            background-color: white;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e3a8a;
+            margin-bottom: 25px;
+        }
+
+
+        /* =========================
+           FORM
+        ========================== */
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px;
+
+            border: 1px solid #aaa;
+            border-radius: 5px;
+
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #2563eb;
+            outline: none;
+        }
+
+        textarea {
+            height: 80px;
+            resize: none;
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================== */
+
+        .submit-btn {
+            width: 100%;
+
+            margin-top: 25px;
+
+            padding: 12px;
+
+            background-color: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 5px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+
+        /* =========================
+           MESSAGE
+        ========================== */
+
+        #studentMessage {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+
+        /* =========================
+           RESULT BOX
+        ========================== */
+
+        .result-box {
+            margin-top: 25px;
+
+            padding: 20px;
+
+            background-color: #eff6ff;
+
+            border-left: 5px solid #2563eb;
+
+            line-height: 1.8;
+
+            border-radius: 5px;
+        }
+
+        .pass {
+            color: green;
+            font-weight: bold;
+        }
+
+        .fail {
+            color: red;
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           MOBILE DESIGN
+        ========================== */
+
+        @media (max-width: 600px) {
+
+            nav {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            nav h2 {
+                margin: 0 0 10px 0;
+            }
+
+            nav button {
+                width: 100%;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <nav>
+
+        <h2>
+            Student Management System
+        </h2>
+
+        <button onclick="showPage('studentPage')">
+            Student ID
+        </button>
+
+        <button onclick="showPage('attendancePage')">
+            Attendance
+        </button>
+
+    </nav>
+
+
+
+    <!-- =========================
+         PAGE 1
+         STUDENT ID
+    ========================== -->
+
+    <section id="studentPage" class="page">
+
+        <div class="container">
+
+            <h1>
+                Student Registration
+            </h1>
+
+
+            <form id="studentForm">
+
+
+                <label>
+                    Student ID
+                </label>
+
+                <input
+                    type="text"
+                    id="studentId"
+                    placeholder="Enter Student ID"
+                >
+
+
+                <label>
+                    Student Name
+                </label>
+
+                <input
+                    type="text"
+                    id="studentName"
+                    placeholder="Enter Student Name"
+                >
+
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter Email"
+                >
+
+
+                <label>
+                    Phone Number
+                </label>
+
+                <input
+                    type="text"
+                    id="phone"
+                    placeholder="Enter Phone Number"
+                >
+
+
+                <label>
+                    Date of Birth
+                </label>
+
+                <input
+                    type="date"
+                    id="dob"
+                >
+
+
+                <label>
+                    Gender
+                </label>
+
+                <select id="gender">
+
+                    <option value="">
+                        Select Gender
+                    </option>
+
+                    <option value="Male">
+                        Male
+                    </option>
+
+                    <option value="Female">
+                        Female
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Address
+                </label>
+
+                <textarea
+                    id="address"
+                    placeholder="Enter Address">
+                </textarea>
+
+
+                <button
+                    type="submit"
+                    class="submit-btn">
+
+                    Register Student
+
+                </button>
+
+            </form>
+
+
+            <p id="studentMessage"></p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         PAGE 2
+         ATTENDANCE
+    ========================== -->
+
+    <section id="attendancePage" class="page">
+
+        <div class="container">
+
+            <h1>
+                Student Attendance
+            </h1>
+
+
+            <label>
+                Student ID
+            </label>
+
+            <input
+                type="text"
+                id="attStudentId"
+                placeholder="Enter Student ID"
+            >
+
+
+            <label>
+                Student Name
+            </label>
+
+            <input
+                type="text"
+                id="attStudentName"
+                placeholder="Enter Student Name"
+            >
+
+
+            <label>
+                Total Working Days
+            </label>
+
+            <input
+                type="number"
+                id="workingDays"
+                placeholder="Enter Working Days"
+            >
+
+
+            <label>
+                Days Present
+            </label>
+
+            <input
+                type="number"
+                id="presentDays"
+                placeholder="Enter Present Days"
+            >
+
+
+            <button
+                onclick="calculateAttendance()"
+                class="submit-btn">
+
+                Calculate Attendance
+
+            </button>
+
+
+            <div
+                id="attendanceResult"
+                class="result-box">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /* =========================
+           PAGE NAVIGATION
+        ========================== */
+
+        function showPage(pageId) {
+
+            let pages =
+                document.querySelectorAll(".page");
+
+            pages.forEach(function(page) {
+
+                page.style.display = "none";
+
+            });
+
+            document.getElementById(pageId)
+                .style.display = "block";
+        }
+
+
+
+        /* =========================
+           STUDENT REGISTRATION
+        ========================== */
+
+        document
+            .getElementById("studentForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    let studentId =
+                        document
+                        .getElementById("studentId")
+                        .value
+                        .trim();
+
+
+                    let studentName =
+                        document
+                        .getElementById("studentName")
+                        .value
+                        .trim();
+
+
+                    let email =
+                        document
+                        .getElementById("email")
+                        .value
+                        .trim();
+
+
+                    let phone =
+                        document
+                        .getElementById("phone")
+                        .value
+                        .trim();
+
+
+                    let dob =
+                        document
+                        .getElementById("dob")
+                        .value;
+
+
+                    let gender =
+                        document
+                        .getElementById("gender")
+                        .value;
+
+
+                    let address =
+                        document
+                        .getElementById("address")
+                        .value
+                        .trim();
+
+
+                    let message =
+                        document
+                        .getElementById(
+                            "studentMessage"
+                        );
+
+
+                    /* Validate fields */
+
+                    if (
+                        studentId === "" ||
+                        studentName === "" ||
+                        email === "" ||
+                        phone === "" ||
+                        dob === "" ||
+                        gender === "" ||
+                        address === ""
+                    ) {
+
+                        message.style.color = "red";
+
+                        message.innerHTML =
+                            "Please fill in all fields.";
+
+                        return;
+                    }
+
+
+                    /* Validate phone */
+
+                    if (
+                        phone.length !== 10 ||
+                        isNaN(phone)
+                    ) {
+
+                        message.style.color = "red";
+
+                        message.innerHTML =
+                            "Please enter a valid 10-digit phone number.";
+
+                        return;
+                    }
+
+
+                    /* Success */
+
+                    message.style.color = "green";
+
+                    message.innerHTML =
+                        "Student registered successfully!";
+
+
+                    /* Store student data */
+
+                    localStorage.setItem(
+                        "studentId",
+                        studentId
+                    );
+
+                    localStorage.setItem(
+                        "studentName",
+                        studentName
+                    );
+
+
+                    /* Clear form */
+
+                    document
+                        .getElementById("studentForm")
+                        .reset();
+
+                }
+            );
+
+
+
+        /* =========================
+           ATTENDANCE CALCULATION
+        ========================== */
+
+        function calculateAttendance() {
+
+
+            let studentId =
+                document
+                .getElementById(
+                    "attStudentId"
+                )
+                .value
+                .trim();
+
+
+            let studentName =
+                document
+                .getElementById(
+                    "attStudentName"
+                )
+                .value
+                .trim();
+
+
+            let workingDays =
+                Number(
+                    document
+                    .getElementById(
+                        "workingDays"
+                    )
+                    .value
+                );
+
+
+            let presentDays =
+                Number(
+                    document
+                    .getElementById(
+                        "presentDays"
+                    )
+                    .value
+                );
+
+
+            let result =
+                document
+                .getElementById(
+                    "attendanceResult"
+                );
+
+
+            /* Validate student details */
+
+            if (
+                studentId === "" ||
+                studentName === ""
+            ) {
+
+                result.innerHTML =
+                    "<span class='fail'>" +
+                    "Please enter Student ID and Student Name." +
+                    "</span>";
+
+                return;
+            }
+
+
+            /* Validate attendance */
+
+            if (
+                workingDays <= 0 ||
+                presentDays < 0
+            ) {
+
+                result.innerHTML =
+                    "<span class='fail'>" +
+                    "Please enter valid attendance details." +
+                    "</span>";
+
+                return;
+            }
+
+
+            /* Check present days */
+
+            if (
+                presentDays > workingDays
+            ) {
+
+                result.innerHTML =
+                    "<span class='fail'>" +
+                    "Present days cannot be greater than working days." +
+                    "</span>";
+
+                return;
+            }
+
+
+            /* Calculate percentage */
+
+            let percentage =
+                (presentDays / workingDays) * 100;
+
+
+            /* Determine status */
+
+            let status;
+
+
+            if (percentage >= 75) {
+
+                status =
+                    "<span class='pass'>" +
+                    "Eligible" +
+                    "</span>";
+
+            } else {
+
+                status =
+                    "<span class='fail'>" +
+                    "Not Eligible" +
+                    "</span>";
+            }
+
+
+            /* Display result */
+
+            result.innerHTML =
+
+                "<strong>Student ID:</strong> " +
+                studentId +
+                "<br>" +
+
+                "<strong>Student Name:</strong> " +
+                studentName +
+                "<br>" +
+
+                "<strong>Working Days:</strong> " +
+                workingDays +
+                "<br>" +
+
+                "<strong>Present Days:</strong> " +
+                presentDays +
+                "<br>" +
+
+                "<strong>Attendance:</strong> " +
+                percentage.toFixed(2) +
+                "%<br>" +
+
+                "<strong>Status:</strong> " +
+                status;
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+```
+
+This single file contains:
+
+* **Page 1:** Student ID / Registration
+* **Page 2:** Attendance
+* **CSS:** Included in the `<style>` section
+* **JavaScript:** Included in the `<script>` section
+* **Navigation:** Student ID ↔ Attendance
+* **Validation:** Empty fields and phone number
+* **Attendance calculation:** Percentage + Eligible/Not Eligible
+* **Responsive design:** Works on mobile and desktop.

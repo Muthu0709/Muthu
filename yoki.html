@@ -1,0 +1,465 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Student Management</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            background-color: lightblue;
+            margin: 0;
+        }
+
+        nav {
+            background-color: navy;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav h2 {
+            color: white;
+        }
+
+        nav button {
+            padding: 10px;
+            margin: 5px;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .container {
+            background-color: white;
+            width: 400px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: navy;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        .submit {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: navy;
+            color: white;
+            border: none;
+        }
+
+        .subjects, .result {
+            background-color: #eeeeee;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .pass {
+            color: green;
+        }
+
+        .fail {
+            color: red;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- NAVIGATION -->
+
+<nav>
+
+    <h2>Student Management System</h2>
+
+    <button onclick="showPage('coursePage')">
+        Course & Subject
+    </button>
+
+    <button onclick="showPage('resultPage')">
+        Marks & Result
+    </button>
+
+</nav>
+
+
+<!-- PAGE 3 -->
+
+<div id="coursePage" class="page">
+
+    <div class="container">
+
+        <h1>Course & Subject</h1>
+
+        <label>Student ID</label>
+        <input type="text" id="studentId"
+               placeholder="Enter Student ID">
+
+        <label>Student Name</label>
+        <input type="text" id="studentName"
+               placeholder="Enter Student Name">
+
+        <label>Select Course</label>
+
+        <select id="course" onchange="showSubjects()">
+
+            <option value="">
+                Select Course
+            </option>
+
+            <option value="BCA">
+                BCA
+            </option>
+
+            <option value="BSC">
+                B.Sc Computer Science
+            </option>
+
+            <option value="BCOM">
+                B.Com
+            </option>
+
+            <option value="BBA">
+                BBA
+            </option>
+
+        </select>
+
+
+        <div id="subjects" class="subjects">
+
+            Select a course to see subjects.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PAGE 4 -->
+
+<div id="resultPage" class="page">
+
+    <div class="container">
+
+        <h1>Marks & Result</h1>
+
+        <label>Student ID</label>
+
+        <input type="text"
+               id="resultId"
+               placeholder="Enter Student ID">
+
+
+        <label>Student Name</label>
+
+        <input type="text"
+               id="resultName"
+               placeholder="Enter Student Name">
+
+
+        <label>Web Technology</label>
+
+        <input type="number"
+               id="web"
+               placeholder="Marks">
+
+
+        <label>Java</label>
+
+        <input type="number"
+               id="java"
+               placeholder="Marks">
+
+
+        <label>DBMS</label>
+
+        <input type="number"
+               id="dbms"
+               placeholder="Marks">
+
+
+        <label>Computer Networks</label>
+
+        <input type="number"
+               id="network"
+               placeholder="Marks">
+
+
+        <label>Operating System</label>
+
+        <input type="number"
+               id="os"
+               placeholder="Marks">
+
+
+        <button class="submit"
+                onclick="calculateResult()">
+
+            Calculate Result
+
+        </button>
+
+
+        <div id="result"
+             class="result">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* SHOW PAGE */
+
+function showPage(page) {
+
+    document.getElementById("coursePage")
+        .style.display = "none";
+
+    document.getElementById("resultPage")
+        .style.display = "none";
+
+    document.getElementById(page)
+        .style.display = "block";
+}
+
+
+/* SHOW SUBJECTS */
+
+function showSubjects() {
+
+    let course =
+        document.getElementById("course").value;
+
+    let subjects =
+        document.getElementById("subjects");
+
+
+    if (course == "BCA") {
+
+        subjects.innerHTML =
+            "<b>BCA Subjects</b><ul>" +
+            "<li>Web Technology</li>" +
+            "<li>Java</li>" +
+            "<li>DBMS</li>" +
+            "<li>Computer Networks</li>" +
+            "<li>Operating System</li>" +
+            "</ul>";
+
+    }
+
+    else if (course == "BSC") {
+
+        subjects.innerHTML =
+            "<b>B.Sc CS Subjects</b><ul>" +
+            "<li>C Programming</li>" +
+            "<li>Data Structures</li>" +
+            "<li>Computer Architecture</li>" +
+            "<li>Operating System</li>" +
+            "<li>Web Technology</li>" +
+            "</ul>";
+
+    }
+
+    else if (course == "BCOM") {
+
+        subjects.innerHTML =
+            "<b>B.Com Subjects</b><ul>" +
+            "<li>Accounting</li>" +
+            "<li>Economics</li>" +
+            "<li>Business Mathematics</li>" +
+            "<li>Marketing</li>" +
+            "<li>Management</li>" +
+            "</ul>";
+
+    }
+
+    else if (course == "BBA") {
+
+        subjects.innerHTML =
+            "<b>BBA Subjects</b><ul>" +
+            "<li>Business Management</li>" +
+            "<li>Marketing</li>" +
+            "<li>Finance</li>" +
+            "<li>Human Resources</li>" +
+            "<li>Economics</li>" +
+            "</ul>";
+
+    }
+
+    else {
+
+        subjects.innerHTML =
+            "Select a course to see subjects.";
+
+    }
+
+}
+
+
+/* CALCULATE RESULT */
+
+function calculateResult() {
+
+    let id =
+        document.getElementById("resultId").value;
+
+    let name =
+        document.getElementById("resultName").value;
+
+    let web =
+        Number(document.getElementById("web").value);
+
+    let java =
+        Number(document.getElementById("java").value);
+
+    let dbms =
+        Number(document.getElementById("dbms").value);
+
+    let network =
+        Number(document.getElementById("network").value);
+
+    let os =
+        Number(document.getElementById("os").value);
+
+
+    if (id == "" || name == "") {
+
+        alert("Please enter Student ID and Name");
+
+        return;
+    }
+
+
+    let total =
+        web + java + dbms + network + os;
+
+    let percentage =
+        total / 5;
+
+
+    let grade;
+
+
+    if (percentage >= 90) {
+
+        grade = "A+";
+
+    }
+
+    else if (percentage >= 80) {
+
+        grade = "A";
+
+    }
+
+    else if (percentage >= 70) {
+
+        grade = "B";
+
+    }
+
+    else if (percentage >= 60) {
+
+        grade = "C";
+
+    }
+
+    else if (percentage >= 50) {
+
+        grade = "D";
+
+    }
+
+    else {
+
+        grade = "F";
+
+    }
+
+
+    let status;
+
+
+    if (
+        web >= 40 &&
+        java >= 40 &&
+        dbms >= 40 &&
+        network >= 40 &&
+        os >= 40
+    ) {
+
+        status =
+            "<span class='pass'>PASS</span>";
+
+    }
+
+    else {
+
+        status =
+            "<span class='fail'>FAIL</span>";
+
+    }
+
+
+    document.getElementById("result").innerHTML =
+
+        "<b>Student ID:</b> " + id + "<br>" +
+
+        "<b>Student Name:</b> " + name + "<br><br>" +
+
+        "<b>Total Marks:</b> " +
+        total + " / 500<br>" +
+
+        "<b>Percentage:</b> " +
+        percentage.toFixed(2) + "%<br>" +
+
+        "<b>Grade:</b> " +
+        grade + "<br>" +
+
+        "<b>Result:</b> " +
+        status;
+
+}
+
+
+/* OPEN COURSE PAGE FIRST */
+
+showPage("coursePage");
+
+</script>
+
+</body>
+</html>
+```
+
+This is the **simple version** with only the important HTML, CSS, and JavaScript. It has **Page 3 (Course & Subject)** and **Page 4 (Marks & Result)** in one file.
