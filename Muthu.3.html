@@ -1,0 +1,634 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Student Management System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial;
+            margin: 0;
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* LOGIN / HOME PAGES */
+
+        .page {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .center-page {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .box {
+            background-color: white;
+            width: 400px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #aaa;
+        }
+
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin: 8px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+
+        /* DASHBOARD */
+
+        #dashboard {
+            display: none;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: calc(100vh - 85px);
+        }
+
+        /* LEFT SIDE MENU */
+
+        .sidebar {
+            width: 230px;
+            background-color: #222;
+            color: white;
+            padding-top: 20px;
+            min-height: calc(100vh - 85px);
+        }
+
+        .sidebar h3 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .sidebar button {
+            display: block;
+            width: 90%;
+            margin: 10px auto;
+            text-align: left;
+            background-color: #333;
+            border-radius: 5px;
+        }
+
+        .sidebar button:hover {
+            background-color: #007bff;
+        }
+
+        /* RIGHT SIDE CONTENT */
+
+        .content {
+            flex: 1;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .content-box {
+            background-color: white;
+            max-width: 700px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #aaa;
+        }
+
+        /* ID CARD */
+
+        .id-form {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .id-form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* ATTENDANCE */
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            background-color: white;
+            width: 90%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 12px;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>Student Management System</h1>
+</header>
+
+
+<!-- ================= HOME PAGE ================= -->
+
+<div id="home" class="page active center-page">
+
+    <h2>Welcome</h2>
+
+    <p>Student Login and Management System</p>
+
+    <button onclick="showLogin()">
+        Student Login
+    </button>
+
+</div>
+
+
+<!-- ================= LOGIN PAGE ================= -->
+
+<div id="login" class="page center-page">
+
+    <div class="box">
+
+        <h2>Student Login</h2>
+
+        <input type="text"
+               id="username"
+               placeholder="Student ID"
+               oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
+        <input type="password"
+               id="password"
+               placeholder="Password">
+
+        <br>
+
+        <button onclick="loginStudent()">
+            Login
+        </button>
+
+        <p id="error" class="error"></p>
+
+    </div>
+
+</div>
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<div id="dashboard">
+
+    <div class="dashboard">
+
+        <!-- LEFT SIDEBAR -->
+
+        <div class="sidebar">
+
+            <h3>Student Menu</h3>
+
+            <button onclick="showContent('profile')">
+                👤 Student Profile
+            </button>
+
+            <button onclick="showContent('idcard')">
+                🪪 ID Card Registration
+            </button>
+
+            <button onclick="showContent('attendance')">
+                📊 Attendance
+            </button>
+
+            <button onclick="logout()">
+                🚪 Logout
+            </button>
+
+        </div>
+
+
+        <!-- RIGHT CONTENT -->
+
+        <div class="content">
+
+
+            <!-- PROFILE -->
+
+            <div id="profile" class="content-box student-content">
+
+                <h2>Student Profile</h2>
+
+                <hr>
+
+                <p>
+                    <b>Name:</b> Muthukumaran.s
+                </p>
+
+                <p>
+                    <b>Student ID:</b> 112434026
+                </p>
+
+                <p>
+                    <b>Department:</b> Computer Science
+                </p>
+
+                <p>
+                    <b>Year:</b> II Year
+                </p>
+
+                <p>
+                    <b>College:</b> SCSVMV
+                </p>
+
+            </div>
+
+
+            <!-- ID CARD REGISTRATION -->
+
+            <div id="idcard" class="content-box student-content"
+                 style="display:none;">
+
+                <h2>Student ID Card Registration</h2>
+
+                <div class="id-form">
+
+                    <label>Student Name</label>
+
+                    <input type="text"
+                           id="studentName"
+                           placeholder="Enter Student Name"
+                           oninput="this.value=this.value.replace(/[0-9]/g,'')">
+
+
+                    <label>Student ID</label>
+
+                    <input type="text"
+                           id="studentNumber"
+                           placeholder="Enter Student ID"
+                           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
+
+                    <label>Department</label>
+
+                    <select id="department">
+
+                        <option value="">
+                            Select Department
+                        </option>
+
+                        <option>
+                            Computer Science
+                        </option>
+
+                        <option>
+                            Information Technology
+                        </option>
+
+                        <option>
+                            Computer Applications
+                        </option>
+
+                        <option>
+                            Electronics and Communication
+                        </option>
+
+                        <option>
+                            Electrical and Electronics
+                        </option>
+
+                        <option>
+                            Mechanical Engineering
+                        </option>
+
+                        <option>
+                            Civil Engineering
+                        </option>
+
+                        <option>
+                            Artificial Intelligence and Data Science
+                        </option>
+
+                    </select>
+
+
+                    <label>Year</label>
+
+                    <select id="year">
+
+                        <option value="">
+                            Select Year
+                        </option>
+
+                        <option>
+                            I Year
+                        </option>
+
+                        <option>
+                            II Year
+                        </option>
+
+                        <option>
+                            III Year
+                        </option>
+
+                        <option>
+                            IV Year
+                        </option>
+
+                    </select>
+
+
+                    <label>Date of Birth</label>
+
+                    <input type="date"
+                           id="dob">
+
+
+                    <label>College Name</label>
+
+                    <input type="text"
+                           id="college"
+                           placeholder="Enter College Name">
+
+
+                    <label>Phone Number</label>
+
+                    <input type="text"
+                           id="phone"
+                           placeholder="Enter Phone Number"
+                           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
+
+                    <br>
+
+                    <button onclick="registerID()">
+                        Register ID Card
+                    </button>
+
+                    <p id="success" class="success"></p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ATTENDANCE -->
+
+            <div id="attendance" class="content-box student-content"
+                 style="display:none;">
+
+                <h2>Student Attendance</h2>
+
+                <br>
+
+                <table>
+
+                    <tr>
+                        <th>Subject</th>
+                        <th>Total</th>
+                        <th>Present</th>
+                        <th>Absent</th>
+                        <th>Percentage</th>
+                    </tr>
+
+                    <tr>
+                        <td>Web Technology</td>
+                        <td>40</td>
+                        <td>36</td>
+                        <td>4</td>
+                        <td>90%</td>
+                    </tr>
+
+                    <tr>
+                        <td>Java</td>
+                        <td>40</td>
+                        <td>34</td>
+                        <td>6</td>
+                        <td>85%</td>
+                    </tr>
+
+                    <tr>
+                        <td>Database</td>
+                        <td>40</td>
+                        <td>38</td>
+                        <td>2</td>
+                        <td>95%</td>
+                    </tr>
+
+                </table>
+
+                <h3>
+                    Overall Attendance: 90%
+                </h3>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* ================= SHOW LOGIN ================= */
+
+function showLogin() {
+
+    document.getElementById("home").style.display = "none";
+
+    document.getElementById("login").style.display = "block";
+
+}
+
+
+/* ================= LOGIN ================= */
+
+function loginStudent() {
+
+    let username =
+        document.getElementById("username").value;
+
+    let password =
+        document.getElementById("password").value;
+
+
+    if (username == "112434026" &&
+        password == "27.07.2006") {
+
+        /* Hide login */
+
+        document.getElementById("login").style.display =
+            "none";
+
+
+        /* Show dashboard */
+
+        document.getElementById("dashboard").style.display =
+            "block";
+
+
+        /* Show profile first */
+
+        showContent("profile");
+
+    }
+
+    else {
+
+        document.getElementById("error").innerHTML =
+            "Invalid Student ID or Password";
+
+    }
+
+}
+
+
+/* ================= SHOW CONTENT ================= */
+
+function showContent(pageName) {
+
+    let pages =
+        document.getElementsByClassName("student-content");
+
+
+    for (let i = 0; i < pages.length; i++) {
+
+        pages[i].style.display = "none";
+
+    }
+
+
+    document.getElementById(pageName).style.display =
+        "block";
+
+}
+
+
+/* ================= ID CARD REGISTRATION ================= */
+
+function registerID() {
+
+    let name =
+        document.getElementById("studentName").value;
+
+    let id =
+        document.getElementById("studentNumber").value;
+
+    let department =
+        document.getElementById("department").value;
+
+    let year =
+        document.getElementById("year").value;
+
+    let dob =
+        document.getElementById("dob").value;
+
+    let college =
+        document.getElementById("college").value;
+
+    let phone =
+        document.getElementById("phone").value;
+
+
+    if (name == "" ||
+        id == "" ||
+        department == "" ||
+        year == "" ||
+        dob == "" ||
+        college == "" ||
+        phone == "") {
+
+        document.getElementById("success").innerHTML =
+            "Please fill all details";
+
+        return;
+
+    }
+
+
+    document.getElementById("success").innerHTML =
+        "ID Card Registered Successfully!";
+
+
+    setTimeout(function() {
+
+        showContent("attendance");
+
+    }, 1000);
+
+}
+
+
+/* ================= LOGOUT ================= */
+
+function logout() {
+
+    document.getElementById("username").value = "";
+
+    document.getElementById("password").value = "";
+
+    document.getElementById("dashboard").style.display =
+        "none";
+
+    document.getElementById("home").style.display =
+        "block";
+
+}
+
+</script>
+
+
+</body>
+</html>
+```
+
